@@ -1238,6 +1238,36 @@ store.verbosity = 0;
         });
     }
     store.when("re-refreshed", function() {
+
+        // These refreshes are generally unnecessary and force a login prompt for the user.
+        // We don't want to do that, ever, unless absolutely required.
+        // storekit.restore();
+        // storekit.refreshReceipts(function(data) {
+        //     if (data) {
+        //         var p = data.bundleIdentifier ? store.get(data.bundleIdentifier) : null;
+        //         if (!p) {
+        //             p = new store.Product({
+        //                 id: data.bundleIdentifier || "application data",
+        //                 alias: "application data",
+        //                 type: store.NON_CONSUMABLE
+        //             });
+        //             store.register(p);
+        //         }
+        //         p.version = data.bundleShortVersion;
+        //         p.transaction = {
+        //             type: "ios-appstore",
+        //             appStoreReceipt: data.appStoreReceipt,
+        //             signature: data.signature
+        //         };
+        //         p.trigger("loaded");
+        //         p.set("state", store.APPROVED);
+        //     }
+        // });
+    });
+
+    // This is a complete hack.
+    store.forceRefresh = function() {
+        store.when("re-refreshed", function() {
         storekit.restore();
         storekit.refreshReceipts(function(data) {
             if (data) {
@@ -1261,6 +1291,8 @@ store.verbosity = 0;
             }
         });
     });
+    }
+
     function storekitRestored(originalTransactionId, productId) {
         store.log.info("ios -> restored purchase " + productId);
         storekitPurchased(originalTransactionId, productId);
