@@ -1,4 +1,4 @@
-cordova.define("cc.fovea.cordova.purchase.InAppBillingPlugin", function(require, exports, module) { var store = {};
+var store = {};
 
 store.verbosity = 0;
 
@@ -873,8 +873,7 @@ store.verbosity = 0;
                 p.set({
                     title: validProducts[i].title,
                     price: validProducts[i].price,
-                    price_amount_micros: validProducts[i].price_amount_micros,
-                    numericPrice: validProducts[i].price_amount_micros ? (validProducts[i].price_amount_micros / 1000000.0) : null,
+                    numericPrice: validProducts[i].price_amount_micros ? (parseFloat(validProducts[i].price_amount_micros / 1000000)) : undefined,
                     description: validProducts[i].description,
                     currency: validProducts[i].price_currency_code,
                     state: store.VALID
@@ -995,4 +994,3 @@ if (window) {
 }
 
 module.exports = store;
-});
