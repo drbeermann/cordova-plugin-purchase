@@ -826,6 +826,12 @@ public class IabHelper {
 
 
     int queryPurchases(Inventory inv, String itemType) throws JSONException, RemoteException {
+
+        if (mService == null || mContext == null) {
+            logError("Our service and/or our context are null.  Exiting.");
+            return IABHELPER_UNKNOWN_ERROR;
+        }
+        
         // Query purchases
         logDebug("Querying owned items, item type: " + itemType);
         logDebug("Package name: " + mContext.getPackageName());
