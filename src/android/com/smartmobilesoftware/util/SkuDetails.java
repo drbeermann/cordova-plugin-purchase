@@ -29,7 +29,7 @@ public class SkuDetails {
         mSku = o.optString("productId");
         mType = o.optString("type");
         mPrice = o.optString("price");
-        mNumericPrice = (o.optInt(mPrice) / 1000000.0f);
+        mNumericPrice = (o.optInt("price_amount_micros") / 1000000.0f);
         mTitle = o.optString("title");
         mDescription = o.optString("description");
     }
