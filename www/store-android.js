@@ -64,6 +64,8 @@ store.verbosity = 0;
         this.title = options.title || options.localizedTitle || null;
         this.description = options.description || options.localizedDescription || null;
         this.price = options.price || null;
+        this.price_amount_micros = options.price_amount_micros || null;
+        this.numericPrice = this.price_amount_micros ? (this.price_amount_micros / 1000000.0) : null;
         this.currency = options.currency || null;
         this.loaded = options.loaded;
         this.valid = options.valid;
@@ -873,6 +875,7 @@ store.verbosity = 0;
                 p.set({
                     title: validProducts[i].title,
                     price: validProducts[i].price,
+                    price_amount_micros: validProducts[i].price_amount_micros,
                     description: validProducts[i].description,
                     currency: validProducts[i].price_currency_code,
                     state: store.VALID
