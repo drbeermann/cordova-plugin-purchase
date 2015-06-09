@@ -829,9 +829,9 @@ public class IabHelper {
 
         if (mService == null || mContext == null) {
             logError("Our service and/or our context are null.  Exiting.");
-            return IABHELPER_UNKNOWN_ERROR;
+            return ERR_UNKNOWN;
         }
-        
+
         // Query purchases
         logDebug("Querying owned items, item type: " + itemType);
         logDebug("Package name: " + mContext.getPackageName());
