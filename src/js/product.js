@@ -46,6 +46,8 @@ store.Product = function(options) {
     ///  - `product.price` - Localized price, with currency symbol
     this.price = options.price || null;
 
+    this.numericPrice = options.numericPrice || null;
+
     ///  - `product.currency` - Currency code (optionaly)
     this.currency = options.currency || null;
 

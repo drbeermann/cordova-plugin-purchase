@@ -13,6 +13,7 @@ public class SkuDetails {
     String mSku;
     String mType;
     String mPrice;
+    float mNumericPrice;
     String mTitle;
     String mDescription;
     String mJson;
@@ -28,6 +29,7 @@ public class SkuDetails {
         mSku = o.optString("productId");
         mType = o.optString("type");
         mPrice = o.optString("price");
+        mNumericPrice = (o.optInt(mPrice) / 1000000.0f);
         mTitle = o.optString("title");
         mDescription = o.optString("description");
     }
@@ -35,6 +37,7 @@ public class SkuDetails {
     public String getSku() { return mSku; }
     public String getType() { return mType; }
     public String getPrice() { return mPrice; }
+    public float  getNumericPrice() { return mNumericPrice; }
     public String getTitle() { return mTitle; }
     public String getDescription() { return mDescription; }
 

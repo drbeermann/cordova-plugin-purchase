@@ -64,6 +64,7 @@ store.verbosity = 0;
         this.title = options.title || options.localizedTitle || null;
         this.description = options.description || options.localizedDescription || null;
         this.price = options.price || null;
+        this.numericPrice = options.numericPrice || null;
         this.currency = options.currency || null;
         this.loaded = options.loaded;
         this.valid = options.valid;
@@ -1125,6 +1126,7 @@ store.verbosity = 0;
             p.set({
                 title: validProducts[i].title,
                 price: validProducts[i].price,
+                numericPrice: validProducts[i].numericPrice,
                 description: validProducts[i].description,
                 state: store.VALID
             });
