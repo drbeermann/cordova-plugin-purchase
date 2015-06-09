@@ -874,7 +874,7 @@ store.verbosity = 0;
                     title: validProducts[i].title,
                     price: validProducts[i].price,
                     price_amount_micros: validProducts[i].price_amount_micros,
-                    numericPrice = validProducts[i].price_amount_micros ? (validProducts[i].price_amount_micros / 1000000.0) : null,
+                    numericPrice: validProducts[i].price_amount_micros ? (validProducts[i].price_amount_micros / 1000000.0) : null,
                     description: validProducts[i].description,
                     currency: validProducts[i].price_currency_code,
                     state: store.VALID
