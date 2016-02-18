@@ -308,7 +308,7 @@ unsigned char* unbase64( const char* ascii, int len, int *flen )
  */
 - (void) load: (CDVInvokedUrlCommand*)command
 {
-  DLog(@"Getting products data");
+	DLog(@"Getting products data");
 
     NSArray *inArray = [command.arguments objectAtIndex:0];
 
@@ -353,7 +353,7 @@ unsigned char* unbase64( const char* ascii, int len, int *flen )
 
 - (void) purchase: (CDVInvokedUrlCommand*)command
 {
-  DLog(@"About to do IAP");
+	DLog(@"About to do IAP");
     id identifier = [command.arguments objectAtIndex:0];
     id quantity =   [command.arguments objectAtIndex:1];
 
@@ -361,7 +361,7 @@ unsigned char* unbase64( const char* ascii, int len, int *flen )
     if ([quantity respondsToSelector:@selector(integerValue)]) {
         payment.quantity = [quantity integerValue];
     }
-  [[SKPaymentQueue defaultQueue] addPayment:payment];
+	[[SKPaymentQueue defaultQueue] addPayment:payment];
 }
 
 - (void) restoreCompletedTransactions: (CDVInvokedUrlCommand*)command
@@ -374,62 +374,62 @@ unsigned char* unbase64( const char* ascii, int len, int *flen )
 //
 - (void)paymentQueue:(SKPaymentQueue*)queue updatedTransactions:(NSArray*)transactions
 {
-  NSString *state, *error, *transactionIdentifier, *transactionReceipt, *productId;
-  NSInteger errorCode;
+	NSString *state, *error, *transactionIdentifier, *transactionReceipt, *productId;
+	NSInteger errorCode;
 
     for (SKPaymentTransaction *transaction in transactions)
     {
-    error = state = transactionIdentifier = transactionReceipt = productId = @"";
-    errorCode = 0;
+		error = state = transactionIdentifier = transactionReceipt = productId = @"";
+		errorCode = 0;
         DLog(@"Transaction updated: %@", transaction.payment.productIdentifier);
         BOOL canFinish = NO;
 
         switch (transaction.transactionState)
         {
-      case SKPaymentTransactionStatePurchasing:
-        DLog(@"Purchasing...");
-        state = @"PaymentTransactionStatePurchasing";
-        productId = transaction.payment.productIdentifier;
-        break;
+			case SKPaymentTransactionStatePurchasing:
+				DLog(@"Purchasing...");
+				state = @"PaymentTransactionStatePurchasing";
+				productId = transaction.payment.productIdentifier;
+				break;
 
             case SKPaymentTransactionStatePurchased:
-        state = @"PaymentTransactionStatePurchased";
-        transactionIdentifier = transaction.transactionIdentifier;
-        transactionReceipt = [[transaction transactionReceipt] base64EncodedString];
-        productId = transaction.payment.productIdentifier;
+				state = @"PaymentTransactionStatePurchased";
+				transactionIdentifier = transaction.transactionIdentifier;
+				transactionReceipt = [[transaction transactionReceipt] base64EncodedString];
+				productId = transaction.payment.productIdentifier;
                 canFinish = YES;
                 break;
 
-      case SKPaymentTransactionStateFailed:
-        state = @"PaymentTransactionStateFailed";
-        error = transaction.error.localizedDescription;
-        errorCode = jsErrorCode(transaction.error.code);
-        productId = transaction.payment.productIdentifier;
+			case SKPaymentTransactionStateFailed:
+				state = @"PaymentTransactionStateFailed";
+				error = transaction.error.localizedDescription;
+				errorCode = jsErrorCode(transaction.error.code);
+				productId = transaction.payment.productIdentifier;
                 canFinish = YES;
-        DLog(@"Error %@ - %@", jsErrorCodeAsString(errorCode), error);
+				DLog(@"Error %@ - %@", jsErrorCodeAsString(errorCode), error);
 
-        // Finish failed transactions, when autoFinish is off
-        if (!g_autoFinishEnabled) {
-          [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
-          [self transactionFinished:transaction];
-        }
+				// Finish failed transactions, when autoFinish is off
+				if (!g_autoFinishEnabled) {
+					[[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+					[self transactionFinished:transaction];
+				}
                 break;
 
-      case SKPaymentTransactionStateRestored:
-        state = @"PaymentTransactionStateRestored";
-        transactionIdentifier = transaction.transactionIdentifier;
+			case SKPaymentTransactionStateRestored:
+				state = @"PaymentTransactionStateRestored";
+				transactionIdentifier = transaction.transactionIdentifier;
                 if (!transactionIdentifier)
                     transactionIdentifier = transaction.originalTransaction.transactionIdentifier;
-        transactionReceipt = [[transaction transactionReceipt] base64EncodedString];
-        productId = transaction.originalTransaction.payment.productIdentifier;
+				transactionReceipt = [[transaction transactionReceipt] base64EncodedString];
+				productId = transaction.originalTransaction.payment.productIdentifier;
                 canFinish = YES;
                 break;
 
             default:
-        DLog(@"Invalid state");
+				DLog(@"Invalid state");
                 continue;
         }
-    DLog(@"State: %@", state);
+		DLog(@"State: %@", state);
         NSArray *callbackArgs = [NSArray arrayWithObjects:
                                  NILABLE(state),
                                  [NSNumber numberWithInteger:errorCode],
@@ -438,10 +438,10 @@ unsigned char* unbase64( const char* ascii, int len, int *flen )
                                  NILABLE(productId),
                                  NILABLE(transactionReceipt),
                                  nil];
-    NSString *js = [NSString
+		NSString *js = [NSString
             stringWithFormat:@"window.storekit.updatedTransactionCallback.apply(window.storekit, %@)",
             [callbackArgs JSONSerialize]];
-    // DLog(@"js: %@", js);
+		// DLog(@"js: %@", js);
         [self.commandDelegate evalJs:js];
         if (g_autoFinishEnabled && canFinish) {
             [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
@@ -495,7 +495,7 @@ unsigned char* unbase64( const char* ascii, int len, int *flen )
 
 - (void)paymentQueue:(SKPaymentQueue *)queue restoreCompletedTransactionsFailedWithError:(NSError *)error
 {
-  NSString *js = [NSString stringWithFormat:
+	NSString *js = [NSString stringWithFormat:
       @"window.storekit.restoreCompletedTransactionsFailed(%li)", (unsigned long)jsErrorCode(error.code)];
     [self.commandDelegate evalJs: js];
 }
@@ -697,11 +697,11 @@ static NSString *rootAppleCA = @"MIIEuzCCA6OgAwIBAgIBAjANBgkqhkiG9w0BAQUFADBiMQs
     DLog(@"productsRequest: didReceiveResponse:");
     NSMutableArray *validProducts = [NSMutableArray array];
     DLog(@"Has %li validProducts", (unsigned long)[response.products count]);
-  for (SKProduct *product in response.products) {
+	for (SKProduct *product in response.products) {
         DLog(@" - %@: %@", product.productIdentifier, product.localizedTitle);
 
-        // Get the currency symbol from the NSLocale object
-        NSString *symbol = [product.priceLocale objectForKey:NSLocaleCurrencySymbol];
+        // Get the currency code from the NSLocale object
+        NSString *currencyCode = [product.priceLocale objectForKey:NSLocaleCurrencyCode];
 
         [validProducts addObject:
          [NSDictionary dictionaryWithObjectsAndKeys:
@@ -710,7 +710,7 @@ static NSString *rootAppleCA = @"MIIEuzCCA6OgAwIBAgIBAjANBgkqhkiG9w0BAQUFADBiMQs
           NILABLE(product.localizedDescription), @"description",
           NILABLE(product.localizedPrice),       @"price",
           NILABLE(product.price),                @"numericPrice",
-          NILABLE(symbol),                       @"currency",
+          NILABLE(currencyCode),                 @"currency",
           nil]];
         [self.plugin.list setObject:product forKey:[NSString stringWithFormat:@"%@", product.productIdentifier]];
     }
@@ -733,8 +733,8 @@ static NSString *rootAppleCA = @"MIIEuzCCA6OgAwIBAgIBAjANBgkqhkiG9w0BAQUFADBiMQs
     // [self.plugin.retainer removeObjectForKey:@"productsRequest"];
     // [self.plugin.retainer removeObjectForKey:@"productsRequestDelegate"];
 #else
-  [request release];
-  [self    release];
+	[request release];
+	[self    release];
 #endif
 }
 
@@ -753,9 +753,9 @@ static NSString *rootAppleCA = @"MIIEuzCCA6OgAwIBAgIBAjANBgkqhkiG9w0BAQUFADBiMQs
 
 #if ARC_DISABLED
 - (void) dealloc {
-  [plugin  release];
-  [command release];
-  [super   dealloc];
+	[plugin  release];
+	[command release];
+	[super   dealloc];
 }
 #endif
 
