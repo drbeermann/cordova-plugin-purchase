@@ -57,7 +57,7 @@ function iabLoaded(validProducts) {
                 title: validProducts[i].title,
                 price: validProducts[i].price,
                 description: validProducts[i].description,
-                currency: validProducts[i].price_currency_code,
+                currency: validProducts[i].currency,
                 state: store.VALID
             });
             p.trigger("loaded");
