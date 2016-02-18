@@ -1128,6 +1128,7 @@ store.verbosity = 0;
                 price: validProducts[i].price,
                 numericPrice: validProducts[i].numericPrice,
                 description: validProducts[i].description,
+                currency: validProducts[i].currency,
                 state: store.VALID
             });
             p.trigger("loaded");

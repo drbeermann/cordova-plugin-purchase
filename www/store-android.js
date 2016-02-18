@@ -875,7 +875,7 @@ store.verbosity = 0;
                     price: validProducts[i].price,
                     numericPrice: validProducts[i].price_amount_micros ? (parseFloat(validProducts[i].price_amount_micros / 1000000)) : undefined,
                     description: validProducts[i].description,
-                    currency: validProducts[i].price_currency_code,
+                    currency: validProducts[i].currency,
                     state: store.VALID
                 });
                 p.trigger("loaded");
