@@ -699,6 +699,14 @@ static NSString *rootAppleCA = @"MIIEuzCCA6OgAwIBAgIBAjANBgkqhkiG9w0BAQUFADBiMQs
     DLog(@"Has %li validProducts", (unsigned long)[response.products count]);
 	for (SKProduct *product in response.products) {
         DLog(@" - %@: %@", product.productIdentifier, product.localizedTitle);
+
+        // Get the currency code from the NSLocale object
+        NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+        [numberFormatter setFormatterBehavior:NSNumberFormatterBehavior10_4];
+        [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
+        [numberFormatter setLocale:product.priceLocale];
+        NSString *currencyCode = [numberFormatter currencyCode];
+
         [validProducts addObject:
          [NSDictionary dictionaryWithObjectsAndKeys:
           NILABLE(product.productIdentifier),    @"id",
@@ -706,6 +714,7 @@ static NSString *rootAppleCA = @"MIIEuzCCA6OgAwIBAgIBAjANBgkqhkiG9w0BAQUFADBiMQs
           NILABLE(product.localizedDescription), @"description",
           NILABLE(product.localizedPrice),       @"price",
           NILABLE(product.price),                @"numericPrice",
+          NILABLE(currencyCode),                 @"currency",
           nil]];
         [self.plugin.list setObject:product forKey:[NSString stringWithFormat:@"%@", product.productIdentifier]];
     }
