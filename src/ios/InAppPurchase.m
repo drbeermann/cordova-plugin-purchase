@@ -395,7 +395,7 @@ unsigned char* unbase64( const char* ascii, int len, int *flen )
             case SKPaymentTransactionStatePurchased:
 				state = @"PaymentTransactionStatePurchased";
 				transactionIdentifier = transaction.transactionIdentifier;
-				transactionReceipt = [[transaction transactionReceipt] base64EncodedString];
+				transactionReceipt = [[transaction transactionReceipt] base64EncodedStringWithOptions:0];
 				productId = transaction.payment.productIdentifier;
                 canFinish = YES;
                 break;
@@ -420,7 +420,7 @@ unsigned char* unbase64( const char* ascii, int len, int *flen )
 				transactionIdentifier = transaction.transactionIdentifier;
                 if (!transactionIdentifier)
                     transactionIdentifier = transaction.originalTransaction.transactionIdentifier;
-				transactionReceipt = [[transaction transactionReceipt] base64EncodedString];
+				transactionReceipt = [[transaction transactionReceipt] base64EncodedStringWithOptions:0];
 				productId = transaction.originalTransaction.payment.productIdentifier;
                 canFinish = YES;
                 break;
