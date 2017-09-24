@@ -4,7 +4,7 @@
   "description": "Cordova Purchase plugin for iOS and Android (AppStore and PlayStore)",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/j3k0/PhoneGap-InAppPurchase-iOS.git"
+    "url": "https://github.com/drbeermann/cordova-plugin-purchase.git"
   },
   "keywords": [
     "cordova",
@@ -34,13 +34,5 @@
     "mocha": "^1.21.4",
     "preprocessor": "^1.4.0",
     "uglify-js": "^2.4.15"
-  },
-  "dependencies": {
-    "coveralls": "^2.11.2"
-  },
-  "main": "index.js",
-  "directories": {
-    "doc": "doc",
-    "test": "test"
   }
 }
