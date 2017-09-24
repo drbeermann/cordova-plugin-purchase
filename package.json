@@ -4,7 +4,7 @@
   "description": "Cordova Purchase plugin for iOS and Android (AppStore and PlayStore)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/j3k0/PhoneGap-InAppPurchase-iOS.git"
+    "url": "git+https://github.com/j3k0/PhoneGap-InAppPurchase-iOS.git"
   },
   "keywords": [
     "cordova",
@@ -37,5 +37,10 @@
   },
   "dependencies": {
     "coveralls": "^2.11.2"
+  },
+  "main": "index.js",
+  "directories": {
+    "doc": "doc",
+    "test": "test"
   }
 }
